@@ -10,7 +10,7 @@ This is only a .lev-editor for CTR on PS1. For other tools please check CTR-Tool
 Join the CTR-tools Discord server: https://discord.gg/56xm9Aj
 
 ## Building
-Currently no builds available. Use Unity Editor to edit the levels. If someone is interested to contribute to the repository just poke me on CTR
+Currently no builds available. Use Unity Editor to edit the levels. If someone is interested to contribute to the repository just poke us on CTR-tools Discord Server
 
 Project dependencies:
 Unity 2019.3.7f1
