@@ -34,7 +34,7 @@ namespace CTRFramework
         public List<QuadBlock> quads = new List<QuadBlock>();
         public List<PickupHeader> pickups = new List<PickupHeader>();
         public List<VisData> visdata = new List<VisData>();
-        public List<DynamicModel> dynamics = new List<DynamicModel>();
+        public List<CtrModel> dynamics = new List<CtrModel>();
         public SkyBox skybox;
         public Nav nav;
 
@@ -241,7 +241,7 @@ namespace CTRFramework
                 pickUpModelDataLocation.Add((uint) br.BaseStream.Position );
                 br.BaseStream.Position = br.ReadUInt32();
                 pickUpModelDataLocation.Add((uint) br.BaseStream.Position );
-                //dynamics.Add(new DynamicModel(br));
+                //dynamics.Add(new CtrModel(br));
             }
 
             StringBuilder sb = new StringBuilder();
@@ -260,6 +260,7 @@ namespace CTRFramework
                 }
             }
 
+            Debug.Log($"{min}, {max}");
             Debug.Log($"{min}, {max}");
             // Console.ReadKey();
 

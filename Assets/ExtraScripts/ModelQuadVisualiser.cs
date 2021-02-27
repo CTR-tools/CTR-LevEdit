@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
+using Random = System.Random;
 
 public class ModelQuadVisualiser : MonoBehaviour
 {
@@ -11,6 +8,13 @@ public class ModelQuadVisualiser : MonoBehaviour
     public MeshCollider Collider;
     public MeshRenderer Renderer;
     public Vector3 Center;
+    public Vector3 Normal;
+
+    private int frame = 0;
+    private void Start()
+    {
+        frame = (int)(UnityEngine.Random.value*32.0f);
+    }
     private void OnDrawGizmosSelected()
     {
         /*if (Selection.Contains(transform.gameObject))*/
@@ -27,11 +31,16 @@ public class ModelQuadVisualiser : MonoBehaviour
 
     private void Update()
     {
+        if ((++frame) % 8 > 0) return;
         if (CountQuads.MainCamera == null) return;
         if (GeometryUtility.TestPlanesAABB(CountQuads.Planes, Collider.bounds))
         {
             Vector3 offset = (Center - CountQuads.MainCamera.transform.position).normalized;
-            if (Physics.Linecast(Center - offset * 0.005f, CountQuads.MainCamera.transform.position ))
+            
+            Debug.DrawRay(Center,Normal, new Color(1f,0f,1f,0.2f));
+            if (
+                Vector3.Dot(Normal, CountQuads.MainCamera.transform.position - Center) <= 0 ||
+                Physics.Linecast(CountQuads.MainCamera.transform.position, Center + Normal * 0.01f ))
             {
                 if (visible)
                 {

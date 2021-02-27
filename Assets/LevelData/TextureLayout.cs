@@ -7,7 +7,7 @@ using CTRFramework.Vram;
 
 namespace CTRFramework
 {
-    public class TextureLayout
+    public class TextureLayout : IRead
     {
         public uint offset;
 
@@ -26,11 +26,6 @@ namespace CTRFramework
         public byte f1;
         public byte f2;
         public byte f3;
-
-        private ushort buf0;
-        private byte buf1;
-
-        private bool drawEmpty;
 
         public Point min
         {
@@ -141,7 +136,10 @@ namespace CTRFramework
             int test = br.ReadInt32();
 
             if (test == 0)
+            {
+                Helpers.Panic("texturelayout", "test failed");
                 return null;
+            }
 
             br.BaseStream.Position -= 4;
             return new TextureLayout(br);
@@ -153,22 +151,22 @@ namespace CTRFramework
 
             uv.Add(new Vector2b(br));
 
-            buf0 = br.ReadUInt16();
+            ushort buf = br.ReadUInt16();
 
-            PalX = (ushort)(buf0 & 0x3F);
-            PalY = (ushort)(buf0 >> 6);
+            PalX = (ushort)(buf & 0x3F);
+            PalY = (ushort)(buf >> 6);
 
             uv.Add(new Vector2b(br));
 
-            buf1 = br.ReadByte();
+            buf = br.ReadByte();
 
-            PageX = (ushort)(buf1 & 0xF);
-            PageY = (ushort)((buf1 >> 4) & 1);
+            PageX = (ushort)(buf & 0xF);
+            PageY = (ushort)((buf >> 4) & 1);
 
             //i guess 2 bits here define bpp
-            f1 = (byte)((buf1 >> 5) & 1);
-            f2 = (byte)((buf1 >> 6) & 1);
-            f3 = (byte)((buf1 >> 7) & 1);
+            f1 = (byte)((buf >> 5) & 1);
+            f2 = (byte)((buf >> 6) & 1);
+            f3 = (byte)((buf >> 7) & 1);
             check = br.ReadByte();
 
             //checking page byte 2 if it's ever not 0
@@ -185,29 +183,24 @@ namespace CTRFramework
 
             //Console.WriteLine($"{Tag()}: f1 f2 f3 {f1} {f2} {f3}");
 
+            /*
             //apparently some textures uses 8 bit mode, or even 16 bit color. must be a flag somewhere.
             if (offset == 0x0004B5B8 || offset == 0x0004B5E8 || offset == 0x0004B6A8 || offset == 0x0004B3D8)
             {
-
                 Console.WriteLine(ToString());
                 //Console.ReadKey();
             }
+            */
         }
+        
         public void Write(BinaryWriterEx bw)
         {
             uv[0].Write(bw);
-
-            bw.Write(buf0);
-
+            bw.Write((ushort)0);
             uv[1].Write(bw);
-
-            bw.Write(buf1);
-
-            bw.Write(check);
-
+            bw.Write((ushort)0);
             uv[2].Write(bw);
             uv[3].Write(bw);
-
         }
 
         //meant to be unique

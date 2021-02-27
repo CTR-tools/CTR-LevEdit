@@ -37,6 +37,19 @@ namespace CTRFramework
     }
 
     [Flags]
+    public enum CtrDrawFlags
+    {
+        s = 1 << 7,     //starts a new tristrip
+        l = 1 << 6,     //swap 1st vertex of the new face with the 1st from the last one
+        n = 1 << 5,     //defines whether the face normal should be flipped
+        d = 1 << 4,     //single sided if set
+        k = 1 << 3,     //tells whether it should take color from scratchpad or ram. original models all use this, but custom result in random colors.
+        v = 1 << 2,     //takes vertex from stack instead of vertex array
+        b3 = 1 << 1,    //assumed never used
+        b4 = 1 << 0     //assumed never used
+    }
+
+    [Flags]
     public enum ExportFlags
     {
         MeshLow = 1 << 0,
@@ -97,7 +110,7 @@ namespace CTRFramework
     }
 
 
-    //quadblock flags byte 1
+    //quadblock flags
     [Flags]
     public enum QuadFlags
     {
@@ -105,19 +118,35 @@ namespace CTRFramework
         Invisible = 1 << 0,     //check
         MoonGravity = 1 << 1,   //triggers MG in Oxide Station
         Reflection = 1 << 2,    //used in snow levels
-        Kickers = 1 << 3,       //?? maybe denotes that you whould be awarded extra turbo for landing?
+        Kickers = 1 << 3,       //?? maybe denotes that you should be awarded extra turbo for landing?
         OutOfBounds = 1 << 4,   //check
-        NeverUsed = 1 << 5,    //??
+        NeverUsed = 1 << 5,     //??
         TriggerScript = 1 << 6, //turbo pads, but not only. maybe quad has a linked script?
         Reverb = 1 << 7,        //used in various indoor areas or tunnels
         KickersToo = 1 << 8,    //??
         KillRacer = 1 << 9,     //these quads trigger mask
         TikiMouth = 1 << 10,    //only spotted on tiger temple
-        Unknown = 1 << 11,   //mostly same as ground, but more.
+        Unknown = 1 << 11,      //mostly same as ground, but more.
         Ground = 1 << 12,       //ground, makes it collidable
         Wall = 1 << 13,         //walls, if it's flat, char will keep bouncing
         NoCollision = 1 << 14,  //visible stuff like water and outside areas
         InvisibleTriggers = 1 << 15 //invisible stuff like triggers
+    }
+
+    //bit0 defines if entry is leaf or branch
+    //other bits assumed to only be used 1 at a time.
+    [Flags]
+    public enum VisDataFlags
+    {
+        None = 0,
+        Leaf = 1 << 0,
+        Water = 1 << 1,
+        Unk2 = 1 << 2,
+        Unk3 = 1 << 3, // subdiv
+        Unk4 = 1 << 4, // subdiv
+        Unk5 = 1 << 5,
+        Unk6 = 1 << 6,
+        Unk7 = 1 << 7
     }
 
     //defines mesh quality while exporting to OBJ
@@ -128,7 +157,7 @@ namespace CTRFramework
 
     public enum VecFormat
     {
-        Numbers, CommaSeparated, Braced
+        Numbers, CommaSeparated, Braced, Hex
     }
 
 
