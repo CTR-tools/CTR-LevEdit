@@ -27,6 +27,11 @@ namespace CTRFramework
         public byte f2;
         public byte f3;
 
+        private ushort buf0;
+        private byte buf1;
+
+        private bool drawEmpty;
+
         public Point min
         {
             get
@@ -183,24 +188,29 @@ namespace CTRFramework
 
             //Console.WriteLine($"{Tag()}: f1 f2 f3 {f1} {f2} {f3}");
 
-            /*
             //apparently some textures uses 8 bit mode, or even 16 bit color. must be a flag somewhere.
             if (offset == 0x0004B5B8 || offset == 0x0004B5E8 || offset == 0x0004B6A8 || offset == 0x0004B3D8)
             {
+
                 Console.WriteLine(ToString());
                 //Console.ReadKey();
             }
-            */
         }
-        
         public void Write(BinaryWriterEx bw)
         {
             uv[0].Write(bw);
-            bw.Write((ushort)0);
+
+            bw.Write(buf0);
+
             uv[1].Write(bw);
-            bw.Write((ushort)0);
+
+            bw.Write(buf1);
+
+            bw.Write(check);
+
             uv[2].Write(bw);
             uv[3].Write(bw);
+
         }
 
         //meant to be unique
