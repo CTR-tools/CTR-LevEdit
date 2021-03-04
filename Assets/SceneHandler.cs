@@ -329,10 +329,6 @@ namespace CTRFramework
                         unkadv.Write(bw);
                     }
                     
-                    bw.Seek((int) header.ptrTrialData + 4, SeekOrigin.Begin);
-                    bw.Write(posu1_cnt);
-                    bw.Write(posu1_ptr);
-                    
                     bw.Seek((int) posu1_ptr + 4, SeekOrigin.Begin);
                     for (int i = 0; i < posu1_cnt; i++)
                         posu1[i].Write(bw);

@@ -261,13 +261,13 @@ namespace CTRFramework
             bw.Write(skip3);
 
             bw.Seek((int) ptrBuildStart + 4, SeekOrigin.Begin);
-            bw.Write(DateTime.Now.ToString());
+            bw.WriteStringFixed(DateTime.Now.ToString());
 
             bw.Seek((int) ptrBuildEnd + 4, SeekOrigin.Begin);
-            bw.Write(DateTime.Now.ToString());
+            bw.WriteStringFixed(DateTime.Now.ToString());
 
             bw.Seek((int) ptrBuildType + 4, SeekOrigin.Begin);
-            bw.Write(ptrBuildTypeStr);
+            bw.WriteStringFixed(ptrBuildTypeStr);
 
         }
     }

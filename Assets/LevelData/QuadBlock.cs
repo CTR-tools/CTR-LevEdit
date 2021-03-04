@@ -209,10 +209,10 @@ namespace CTRFramework
 
             Debug.Log(ptrTexLow);
             
+/*
             long texpos = bw.BaseStream.Position;
             bw.Seek((int) ptrTexLow + 4, SeekOrigin.Begin);
             texlow.Write(bw);
-
             int texIndex = 0;
             Debug.Log((ptrTexLow + 4)/16 + ", " + ptrTexMid.Length/16);
             if (38435 == (ptrTexLow + 4) / 16)
@@ -232,7 +232,9 @@ namespace CTRFramework
             {
                 Debug.Log("----------THE INTERESTING ONE----------");
             }
+
             bw.Seek((int) texpos, SeekOrigin.Begin);
+            */ 
         }
         public void RecalcBB(List<Vertex> vert)
         {

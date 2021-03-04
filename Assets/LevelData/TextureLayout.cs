@@ -1,7 +1,9 @@
 ﻿using CTRFramework.Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using CTRFramework.Vram;
 
@@ -32,6 +34,18 @@ namespace CTRFramework
 
         private bool drawEmpty;
 
+        private static Dictionary<uint, bool> isWritten;
+
+        public bool IsWritten()
+        {
+            return isWritten[offset];
+        }
+
+        public void ToWrite(bool state)
+        {
+            isWritten[offset] = state;
+        }
+        
         public Point min
         {
             get
@@ -195,22 +209,34 @@ namespace CTRFramework
                 Console.WriteLine(ToString());
                 //Console.ReadKey();
             }
+            if (isWritten == null)
+            {
+                isWritten = new Dictionary<uint, bool>();
+            }
+            ToWrite(false);
         }
-        public void Write(BinaryWriterEx bw)
+        public bool Write(BinaryWriterEx bw)
         {
-            uv[0].Write(bw);
+            bool isWritten = IsWritten();
+            if (isWritten == false)
+            {
+                bw.Seek((int) offset + 4, SeekOrigin.Begin);
+                uv[0].Write(bw);
 
-            bw.Write(buf0);
+                bw.Write(buf0);
 
-            uv[1].Write(bw);
+                uv[1].Write(bw);
 
-            bw.Write(buf1);
+                bw.Write(buf1);
 
-            bw.Write(check);
+                bw.Write(check);
 
-            uv[2].Write(bw);
-            uv[3].Write(bw);
+                uv[2].Write(bw);
+                uv[3].Write(bw);
+                ToWrite(true);
+            }
 
+            return isWritten;
         }
 
         //meant to be unique

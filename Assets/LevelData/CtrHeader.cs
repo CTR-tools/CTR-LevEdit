@@ -463,7 +463,9 @@ namespace CTRFramework
                         }
 
                         foreach (var t in tl)
+                        {
                             t.Write(bw);
+                        }
                     }
 
                     //write clut

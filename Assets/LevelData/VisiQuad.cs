@@ -13,7 +13,7 @@ public class VisiQuad : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (Selection.Contains(transform.gameObject)) {
-            Handles.Label(Position, $"bitvalue = {Qb.bitvalue} | midunk = {Qb.midunk} | offset2 = {Qb.offset2} | trackPos = {Qb.trackPos}\r\n | extradata = {Qb.extradata} | quadFlags = {Qb.quadFlags} | trackPos = {Qb.WeatherIntensity} | WeatherType = {Qb.WeatherType}");
+            Handles.Label(Position, $"bitvalue = {Qb.bitvalue} | midunk = {Qb.midunk} | offset2 = {Qb.offset2} | trackPos = {Qb.trackPos}\r\n | extradata = {Qb.extradata} | quadFlags = {Qb.quadFlags} | WeatherIntensity = {Qb.WeatherIntensity} | WeatherType = {Qb.WeatherType}");
         }
     }
 }

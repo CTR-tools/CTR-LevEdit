@@ -115,20 +115,23 @@ namespace CTRFramework
 
                 bw.Seek((int) texpos + 4, SeekOrigin.Begin);
             }
-            
+
+            bool isWritten = false; //are we trying to re-write data, if so skip writing.
             for (int i = 0; i < 3; i++)
-                midlods[i].Write(bw);
-
-            bw.Write(ptrHi);
-
-            //loosely assume we got a valid pointer
-            if (ptrHi > 0x30000 && ptrHi < 0xB0000)
+                isWritten = midlods[i].Write(bw);
+            if (isWritten == false)
             {
-                bw.Seek((int) ptrHi + 4, SeekOrigin.Begin);
+                bw.Write(ptrHi);
 
-                for (int i = 0; i < 16; i++)
+                //loosely assume we got a valid pointer
+                if (ptrHi > 0x30000 && ptrHi < 0xB0000)
                 {
-                    hi[i].Write(bw);
+                    bw.Seek((int) ptrHi + 4, SeekOrigin.Begin);
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        hi[i].Write(bw);
+                    }
                 }
             }
         }

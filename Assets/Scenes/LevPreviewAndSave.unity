@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showCameraFrustum: 0
-  LevPath: Assets\newdata.lev
+  LevPath: Assets\data.lev
   VrmPath: Assets\data.vrm
   LevSavePath: Assets\newdata.lev
   VrmSavePath: Assets\newdata.vrm
