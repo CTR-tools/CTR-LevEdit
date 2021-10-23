@@ -7,7 +7,7 @@ An extension of DCxDemo's CTR-Tools. Attempting to follow CTR-Viewers updates.
 
 This is only a .lev-editor for CTR on PS1. For other tools please check CTR-Tools: https://github.com/DCxDemo/CTR-tools/
 
-Join the CTR-tools Discord server: https://discord.gg/56xm9Aj
+Join the CTR-tools Discord server: https://discord.gg/whkuh2n
 
 ## Running from source
 1. Install required Unity version if you don't have one already (see project dependencies below)
